@@ -14,20 +14,25 @@ def get_currency_codes():
   for row in country_table:
     for col in row.find_all("tr"):
       country = col.contents[1].get_text()
+      code = col.contents[5].get_text()
       num = col.contents[7].get_text()
       if (num != ''):
-        country_dict[country] = num
+        country_dict[int(num)] = [country, code]
         print(f"# {num} {country}")
   return country_dict
 
-def input_currency_code():
+def find_currency_code(currency_codes):
   try:
-    code = int(input("#: "))
+    num = int(input("#: "))
+    if num not in currency_codes.keys():
+      print("Choose a number from the list.")
+      find_currency_code(currency_codes)
   except ValueError:
     print("That wasn’t a number")
-    input_currency_code()
-    
+    find_currency_code(currency_codes)
+  print(f"You chose {currency_codes[num][0]}")
+  print(f"The currency code is {currency_codes[num][1]}")
+
 print("Hello! Please choose select a country by number:")
 currency_codes = get_currency_codes()
-input_currency_code()
-
+find_currency_code(currency_codes)
