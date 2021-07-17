@@ -17,21 +17,24 @@ def get_currency_codes():
       code = col.contents[5].get_text()
       num = col.contents[7].get_text()
       if (num != ''):
-        country_dict[int(num)] = [country, code]
-        print(f"# {num} {country}")
+        print(f"# {int(num)} {country}")
+        country_dict[int(num)] = [country.capitalize(), code]
   return country_dict
 
 def find_currency_code(currency_codes):
   try:
-    num = int(input("#: "))
-    if num not in currency_codes.keys():
+    num = int(input("#:"))
+    if num not in currency_codes:
       print("Choose a number from the list.")
       find_currency_code(currency_codes)
+    else:
+      print(f"You chose {currency_codes[num][0]}")
+      print(f"The currency code is {currency_codes[num][1]}")
+
   except ValueError:
     print("That wasn’t a number")
     find_currency_code(currency_codes)
-  print(f"You chose {currency_codes[num][0]}")
-  print(f"The currency code is {currency_codes[num][1]}")
+
 
 print("Hello! Please choose select a country by number:")
 currency_codes = get_currency_codes()
